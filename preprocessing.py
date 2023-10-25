@@ -119,7 +119,7 @@ def get_bond_features(mol):
         bond_feat = bond_features(bond)
         adj_array[bond.GetBeginAtomIdx()][bond.GetEndAtomIdx()] = bond_feat
         adj_array[bond.GetEndAtomIdx()][bond.GetBeginAtomIdx()] = bond_feat
-    return adj_array.astype(np.bool)
+    return adj_array.astype(np.bool_)
 
 
 def bond_features(bond):
@@ -298,10 +298,10 @@ def preprocess(save_dir, reactants, products,smiles, reaction_types=None,dataset
         
         product_adj = Chem.rdmolops.GetAdjacencyMatrix(product_mol)
         product_adj = product_adj + np.eye(product_adj.shape[0])
-        product_adj = product_adj.astype(np.bool)
+        product_adj = product_adj.astype(np.bool_)
         reactant_adj = Chem.rdmolops.GetAdjacencyMatrix(reactant_mol)
         reactant_adj = reactant_adj + np.eye(reactant_adj.shape[0])
-        reactant_adj = reactant_adj.astype(np.bool)
+        reactant_adj = reactant_adj.astype(np.bool_)
 
         patomidx2pmapidx = get_atomidx2mapidx(product_mol)
         rmapidx2ratomidx = get_mapidx2atomidx(reactant_mol)
@@ -361,7 +361,7 @@ if __name__ == '__main__':
         save_dir = os.path.join(savedir, data_set)
         csv_path = os.path.join(datadir, data_set + '.csv')
         csv = pd.read_csv(csv_path)
-        reaction_list = csv['reactants>reagents>production']
+        reaction_list = csv['rxn_smiles']
         reactant_smarts_list = list(
             map(lambda x: x.split('>>')[0], reaction_list))
         product_smarts_list = list(
